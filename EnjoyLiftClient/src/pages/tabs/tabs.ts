@@ -1,45 +1,19 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
 
-import { HomePage } from '../home/home';
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
-
-/**
- * Generated class for the TabsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
+//import { HomePage } from '../home/home';
+import { SidemenuPage } from '../sidemenu/sidemenu';
 @Component({
-  selector: 'page-tabs',
-  templateUrl: 'tabs.html',
+  templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-  tabRoots: Object[];
+  tab1Root = SidemenuPage;
+  tab2Root = AboutPage;
+  tab3Root = ContactPage;
 
-  constructor(public navCtrl: NavController) {
+  constructor() {
 
-    this.tabRoots = [{
-      root: HomePage,
-      tabTitle: 'Home',
-      tabIcon: 'home'
-    },{
-      root: AboutPage,
-      tabTitle: 'About',
-      tabIcon: 'document'
-    },{
-      root: ContactPage,
-      tabTitle: 'Contact',
-      tabIcon: 'notifications'
-    }
-    ];
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TabsPage');
-  }
-
 }

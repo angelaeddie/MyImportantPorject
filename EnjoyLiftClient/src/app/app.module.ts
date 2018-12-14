@@ -1,47 +1,53 @@
-//根模块  告诉ionic怎么组装应用
-
-//引入angular和ionic的系统模块
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-
-//ionic 打包app以后配置启动画面，以及导航条的服务（不用管 ）
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-//引入根组件
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
-
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
 
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
-import { OtherPage } from '../pages/other/other';
+import { HomePage } from '../pages/home/home';
+import { TabsPage } from '../pages/tabs/tabs';
+
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { SidemenuPage } from '../pages/sidemenu/sidemenu';
 
 @NgModule({
-  declarations: [ /*声明组件*/
+  declarations: [
     MyApp,
-    HomePage,
-    TabsPage,
     AboutPage,
     ContactPage,
-    OtherPage
+    HomePage,SidemenuPage,
+    TabsPage
   ],
-  imports: [/*引入模块 依赖的模块*/
+  imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp,{
+      tabsHideOnSubPages: 'true', //隐藏全部子页面 tabs backButtonText: '返回' /*配置返回按钮*/ 
+      backButtonText: '', /*配置返回按钮*/
+
+      //tabsPlacement: 'top',
+      iconMoode: 'ios', //引用ios的返回图标
+      mode: 'ios',//模型设置为ios后风格也为ios
+      modalEnter: 'modal-slide-in',//设置返回的动画效果
+      modalLeave: 'modal-slide-out', //设置返回的动画效果
+      
+      platforms:{
+        ios:{
+          menuType:'overlay'
+        }
+      }
+    })
   ],
-  bootstrap: [IonicApp],/*启动的模块*/
-  entryComponents: [/*配置不会在模版中的组件*/
+  bootstrap: [IonicApp],
+  entryComponents: [
     MyApp,
-    HomePage,
-    TabsPage,
     AboutPage,
     ContactPage,
-    OtherPage
+    HomePage,SidemenuPage,
+    TabsPage
   ],
-  providers: [/*配置服务*/
+  providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
