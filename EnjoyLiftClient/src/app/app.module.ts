@@ -13,6 +13,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { SidemenuPage } from '../pages/sidemenu/sidemenu';
 //GPS定位插件
 import { Geolocation } from '@ionic-native/geolocation';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -50,7 +51,8 @@ import { Geolocation } from '@ionic-native/geolocation';
   ],
   providers: [
     StatusBar,
-    SplashScreen,Geolocation，
+    SplashScreen,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
