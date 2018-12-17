@@ -1,0 +1,14 @@
+<!-- Generated template for the NavTopComponent component -->
+  <div class="slide_product">
+    <!--如果要实现滚动，外层的ion-scroll 100% 里面元素的宽度要大于100%-->
+    
+    <ion-scroll scrollX="true">
+      <ul class="clearfix" [ngStyle]="{'width': widthList}" >
+        <li *ngFor="let item of list">
+         <div class="div">{{item.title}}</div> 
+          <br/>
+        </li>
+      </ul>
+    </ion-scroll>
+  </div>
+

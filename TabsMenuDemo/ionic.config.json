@@ -1,0 +1,7 @@
+{
+  "name": "tabsmenu",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
