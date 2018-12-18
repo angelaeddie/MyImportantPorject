@@ -2,12 +2,13 @@
   <ion-navbar start>
     <button ion-button menuToggle ><ion-icon ios="ios-list" md="md-list"></ion-icon></button>   
     <ion-title>
-      Menus--
+      Menus--!{{accuracy}}{{location_type}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content >
   <nav-top></nav-top><!--自定义nav-->
+  
   <div #map_container class="map_container"></div>
 </ion-content>

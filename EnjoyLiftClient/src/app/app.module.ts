@@ -9,6 +9,8 @@ import { HomePage } from '../pages/home/home';
 import { SideMenuPage } from '../pages/side-menu/side-menu'
 import { OtherPage } from '../pages/other/other'
 import { ComponentsModule } from '../components/components.module'
+import { HttpServicesProvider } from '../providers/http-services/http-services';
+import { ConfigProvider } from '../providers/config/config';
 @NgModule({
   declarations: [
     MyApp,
@@ -44,7 +46,9 @@ import { ComponentsModule } from '../components/components.module'
   providers: [
     StatusBar,
     SplashScreen,ComponentsModule,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    HttpServicesProvider,
+    ConfigProvider
   ]
 })
 export class AppModule {}
