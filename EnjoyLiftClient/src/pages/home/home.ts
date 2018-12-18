@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { MenuController } from 'ionic-angular';
-
+import { BackgroundMode } from '@ionic-native/background-mode';
 declare var AMap;
 @Component({
   selector: 'page-home',
@@ -13,8 +13,8 @@ export class HomePage {
   public postion = '';
   public accuracy='';
   public location_type='';
-  constructor(public navCtrl: NavController, public menuCtrl: MenuController) {
-
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController,private backgroundMode: BackgroundMode,) {
+    this.backgroundMode.enable();
   }
   ionViewDidEnter() {
     this.loadMap();

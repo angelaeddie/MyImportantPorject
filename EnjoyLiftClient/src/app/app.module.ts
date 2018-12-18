@@ -11,6 +11,8 @@ import { OtherPage } from '../pages/other/other'
 import { ComponentsModule } from '../components/components.module'
 import { HttpServicesProvider } from '../providers/http-services/http-services';
 import { ConfigProvider } from '../providers/config/config';
+//后台运行
+import { BackgroundMode } from '@ionic-native/background-mode';
 @NgModule({
   declarations: [
     MyApp,
@@ -48,7 +50,8 @@ import { ConfigProvider } from '../providers/config/config';
     SplashScreen,ComponentsModule,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpServicesProvider,
-    ConfigProvider
+    ConfigProvider,
+    BackgroundMode,
   ]
 })
 export class AppModule {}
