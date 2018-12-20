@@ -11,12 +11,14 @@ export class HomePage {
   @ViewChild('map_container') map_container: ElementRef;
   public map: any;//地图对象
   public postion = '';
-  public accuracy='';
-  public location_type='';
-  constructor(public navCtrl: NavController, public menuCtrl: MenuController,private backgroundMode: BackgroundMode,) {
+  public accuracy = '';
+  public location_type = '';
+  public myInterval: any; // 定时器
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, private backgroundMode: BackgroundMode, ) {
     this.backgroundMode.enable();
   }
   ionViewDidEnter() {
+
     this.loadMap();
 
     let that = this;
@@ -25,7 +27,7 @@ export class HomePage {
       let geolocation = new AMap.Geolocation({
         enableHighAccuracy: true,//是否使用高精度定位，默认:true
         timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-        maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+        maximumAge: 5,           //定位结果缓存0毫秒，默认：0
         convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
         showButton: true,        //显示定位按钮，默认：true
         buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
@@ -34,18 +36,20 @@ export class HomePage {
         showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
         panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
         zoomToAccuracy: true,     //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-        GeoLocationFirst:false,    //默认为false，设置为true的时候可以调整PC端为优先使用浏览器定位，失败后使用IP定位
-        noGeoLocation:0,          //  是否禁止使用浏览器Geolocation定位，默认值为0，可选值0-3
-                                  // 0: 可以使用浏览器定位
-                                  // 1: 手机设备禁止使用浏览器定位
-                                  // 2: PC上禁止使用浏览器定位
-                                  // 3: 所有终端禁止使用浏览器定位
-        noIpLocate:0,             //是否禁止使用IP定位，默认值为0，可选值0-3
-                                    // 0: 可以使用IP定位        
-                                    // 1: 手机设备禁止使用IP定位        
-                                    // 2: PC上禁止使用IP定位        
-                                    // 3: 所有终端禁止使用IP定位
+        GeoLocationFirst: false,    //默认为false，设置为true的时候可以调整PC端为优先使用浏览器定位，失败后使用IP定位
+        noGeoLocation: 0,          //  是否禁止使用浏览器Geolocation定位，默认值为0，可选值0-3
+        // 0: 可以使用浏览器定位
+        // 1: 手机设备禁止使用浏览器定位
+        // 2: PC上禁止使用浏览器定位
+        // 3: 所有终端禁止使用浏览器定位
+        noIpLocate: 0,             //是否禁止使用IP定位，默认值为0，可选值0-3
+        // 0: 可以使用IP定位        
+        // 1: 手机设备禁止使用IP定位        
+        // 2: PC上禁止使用IP定位        
+        // 3: 所有终端禁止使用IP定位
         // markerOptions: {
+        //   autoRotation: true,  //是否自动旋转。点标记在使用moveAlong动画时，路径方向若有变化，点标记是否自动调整角度，默认为false。广泛用于自动调节车辆行驶方向。
+        //   IE8以下不支持旋转，autoRotation属性无效
         //   bubble: true,      //是否将覆盖物的鼠标或touch等事件冒泡到地图上 
         //   draggable: true,  //设置点标记是否可拖拽移动，默认为false
         //   clickable: true   //点标记是否可点击
@@ -61,7 +65,7 @@ export class HomePage {
           locate: false, //是否显示定位按钮，默认为false
           liteStyle: false, //是否使用精简模式，默认为false
           direction: true,   //方向键盘是否可见，默认为true
-          autoPosition: true, //是否自动定位，即地图初始化加载完成后，是否自动定位的用户所在地，仅在支持HTML5的浏览器中有效，默认为false
+          //autoPosition: true, //是否自动定位，即地图初始化加载完成后，是否自动定位的用户所在地，仅在支持HTML5的浏览器中有效，默认为false
           useNative: true,  //是否使用高德定位sdk用来辅助优化定位效果，默认：false.
 
           // 仅供在使用了高德定位sdk的APP中，嵌入webview页面时使用
@@ -84,35 +88,59 @@ export class HomePage {
         });
         that.map.addControl(scale);
       });
-      geolocation.getCurrentPosition();
 
-      AMap.event.addListener(geolocation, 'complete', that.onComplete.bind(that));//返回定位信息      
-      AMap.event.addListener(geolocation, 'error', (data) => {
-        console.log('定位失败');
-        console.log(data);
-      });   //返回定位出错信息  
+      //成功，定时每五秒请求一次
+      that.myInterval = setInterval(() => {
+        // get current position
+        geolocation.getCurrentPosition((status: any, result: any) => {
+          if (status == 'complete') {
+            console.log(result);
+            console.log(result.position.toString());
+            console.log(result.formattedAddress);
+            that.postion = result.postion;
+            that.accuracy = result.accuracy
+            that.location_type = result.location_type;
+          }
+          else {
+            console.log('定位失败');
+          }
+        });
+        const watch = geolocation.watchPosition();
+
+        geolocation.clearWatch(watch);
+      }, 10000);
+
+      // AMap.event.addListener(geolocation, 'complete', that.onComplete.bind(that));//返回定位信息      
+      // AMap.event.addListener(geolocation, 'error', (data) => {
+      //   console.log('定位失败');
+      //   console.log(data);
+      // });   //返回定位出错信息
+
 
     });
 
+
   }
 
-  //解析定位结果  
-  onComplete(data) {
-    console.log(data);
-    console.log(data.position.toString());
-    console.log(data.formattedAddress);
-    this.postion = data.postion;
-    this.accuracy = data.accuracy
-    this.location_type=data.location_type;
-    // var str = ['定位成功'];
-    // str.push('经度：' + data.position.getLng());
-    // str.push('纬度：' + data.position.getLat());
-    // if (data.accuracy) {
-    //   str.push('精度：' + data.accuracy + ' 米');
-    // }//如为IP精确定位结果则没有精度信息     
-    // str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
-    //  document.getElementById('tip').innerHTML = str.join('<br>');  
-  }
+  // //解析定位结果  
+  // onComplete(data) {
+  //   console.log(data);
+  //   console.log(data.position.toString());
+  //   console.log(data.formattedAddress);
+  //   this.postion = data.postion;
+  //   this.accuracy = data.accuracy
+  //   this.location_type = data.location_type;
+  //   // var str = ['定位成功'];
+  //   // str.push('经度：' + data.position.getLng());
+  //   // str.push('纬度：' + data.position.getLat());
+  //   // if (data.accuracy) {
+  //   //   str.push('精度：' + data.accuracy + ' 米');
+  //   // }//如为IP精确定位结果则没有精度信息     
+  //   // str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+  //   //  document.getElementById('tip').innerHTML = str.join('<br>');  
+  // }
+
+
   loadMap() {
     this.map = new AMap.Map(this.map_container.nativeElement, {
       view: new AMap.View2D({//创建地图二维视口
@@ -123,4 +151,7 @@ export class HomePage {
       })
     });
   }
+
+
+
 }
