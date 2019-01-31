@@ -10,5 +10,21 @@
 <ion-content >
   <nav-top></nav-top><!--自定义nav-->
   
-  <div #map_container class="map_container"></div>
+    <ion-card class="ion-card" *ngIf="isShowTheCard">
+
+      <ion-card-header>
+        {{showInTheCard.title}}
+      </ion-card-header>
+    
+      <ion-card-content>
+        <!-- Add card content here! -->
+        位置:{{showInTheCard.position}}
+        图片：{{showInTheCard.img.D.image}}
+        <img src="{{showInTheCard.img.D.image}}" >
+      </ion-card-content>
+    
+    </ion-card>
+  
+  <div #map_container class="map_container" ></div>
+ 
 </ion-content>

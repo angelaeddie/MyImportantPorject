@@ -8,6 +8,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { SideMenuPage } from '../pages/side-menu/side-menu'
 import { OtherPage } from '../pages/other/other'
+import { SettingPage } from '../pages/setting/setting'
+import { PersonalInfoPage} from '../pages/personal-info/personal-info'
 import { ComponentsModule } from '../components/components.module'
 import { HttpServicesProvider } from '../providers/http-services/http-services';
 import { ConfigProvider } from '../providers/config/config';
@@ -18,7 +20,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
     MyApp,
     HomePage,
     SideMenuPage,
-    OtherPage,
+    OtherPage,SettingPage,PersonalInfoPage,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
     MyApp,
     HomePage,
     SideMenuPage,
-    OtherPage,
+    OtherPage,SettingPage,PersonalInfoPage,
   ],
   providers: [
     StatusBar,

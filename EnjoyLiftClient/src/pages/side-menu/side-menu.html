@@ -10,13 +10,54 @@
       <ion-title>SideMenu</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content>
+  <!-- <ion-content>
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
     </ion-list>
+  </ion-content> -->
+  <ion-content>
+      <div class="login">
+          <div class="userimg">
+            <img src="assets/imgs/user.png"  />
+          </div>
+          <div class="login_reg">
+              <button ion-button>登录</button>
+              <button ion-button >注册</button>
+          </div>
+        </div>
+        <ion-list inset class="user_list">
+      
+              <ion-item-divider >
+              </ion-item-divider>
+              <ion-item (click)="openPage(otherPage)">
+                  <ion-icon name="ios-paper-outline" item-start></ion-icon>
+                  <span>全部订单</span>
+              </ion-item>
+              <ion-item (click)="openPage(settingPage)">
+                  <ion-icon name="ios-card-outline" item-start></ion-icon>
+                  <span> 待付款</span>
+              </ion-item>
+              <ion-item>
+                  <ion-icon name="ios-subway-outline" item-start></ion-icon>
+                  <span>待收货</span>
+              </ion-item>
+      
+              <ion-item-divider >
+              </ion-item-divider>
+              
+              <ion-item>
+                  <ion-icon name="ios-star-outline" item-start></ion-icon>
+                  <span>我的收藏</span>
+              </ion-item>
+              <ion-item>
+                  <ion-icon name="ios-people-outline" item-start></ion-icon>
+                  <span>在线客服</span>
+              </ion-item>
+      
+        </ion-list>
+
   </ion-content>
 </ion-menu>
-
 <ion-nav id="nav" #mycontent [root]="rootPage" swipeBackEnabled="true"></ion-nav>

@@ -1,9 +1,15 @@
 page-home {
-
-}
-page-home {
     .map_container {
       width: 100%;
       height: 100%;
+      z-index:-1;
     }
+    .ion-card{
+      
+      position:fixed;
+      left:0px;
+      bottom:0;
+      position:absolute;
+      img{ width:50px; } ;
+  }
   }
